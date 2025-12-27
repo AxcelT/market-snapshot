@@ -4,12 +4,11 @@ from datetime import datetime
 # ---------------------------------------------------------
 # CONFIGURATION
 # ---------------------------------------------------------
-# TODO: Fill in the correct Yahoo Finance Ticker symbols here
 TICKERS = {
-    "S&P 500": "",        # Hint: Starts with ^
-    "VIX": "",            # Hint: Starts with ^
-    "10Y Yield": "",      # Hint: Starts with ^
-    "USD/PHP": ""         # Hint: Ends with =X
+    "S&P 500": "^GSPC",        # Hint: Starts with ^
+    "VIX": "^VIX",            # Hint: Starts with ^
+    "10Y Yield": "^TNX",      # Hint: Starts with ^
+    "USD/PHP": "PHP=X"         # Hint: Ends with =X
 }
 
 # ---------------------------------------------------------
@@ -23,27 +22,22 @@ def get_latest_price(ticker_symbol):
     """
     print(f"Fetching data for {ticker_symbol}...")
     
-    # TODO: Use yfinance to get the Ticker object
-    # ticker = yf.Ticker(...)
-    
-    # TODO: Get historical data for the last few days (period="5d")
-    # history = ticker.history(...)
-    
-    # TODO: Extract the last available 'Close' price from the history
-    # last_price = ...
-    
-    # Placeholder return (Replace this with actual logic)
-    return 0.00
+    ticker = yf.Ticker(ticker_symbol)
+    history = ticker.history(period="5d")
+    close_price = history.Close[3]
+    return close_price
 
 def determine_volatility_state(vix_value):
     """
     Returns a string description of the market state based on VIX value.
     Example: "High Volatility" if VIX > 20.
     """
-    # TODO: Write your if/else logic here
     if vix_value < 15:
         return "Low / Complacent"
-    # elif ...
+    elif 15 <= vix_value <= 25:
+        return "Normal / Watchful"
+    else:
+        return "High / Volatile"    
     
     return "Unknown State"
 
@@ -52,24 +46,22 @@ def determine_volatility_state(vix_value):
 # ---------------------------------------------------------
 
 def main():
-    # 1. Get the current date
+    # Get the current date
     current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"\n--- MARKET SNAPSHOT: {current_date} ---\n")
 
-    # 2. Fetch Data
-    # Note: We are looping through the TICKERS dictionary we made at the top
+    # Fetch Data
     data_store = {}
     
-    for friendly_name, symbol in TICKERS.items():
-        price = get_latest_price(symbol)
-        data_store[friendly_name] = price
+    for tName, tSymbol in TICKERS.items():
+        price = get_latest_price(tSymbol)
+        data_store[tName] = price
 
-    # 3. specific logic for Volatility State
-    # We pull the VIX value specifically to calculate the state
+    # specific logic for Volatility State
     vix_val = data_store.get("VIX", 0)
     vol_state = determine_volatility_state(vix_val)
 
-    # 4. Display Results
+    # Display Results
     print(f"{'Metric':<20} | {'Value':<15}")
     print("-" * 35)
     print(f"{'S&P 500':<20} | {data_store['S&P 500']:.2f}")
