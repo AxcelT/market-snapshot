@@ -6,17 +6,12 @@ Unlike basic scrapers, this service is engineered for **reliability** and **head
 
 ## 🚀 Key Features
 
-* **Fault Tolerance:** Implements robust error handling and graceful degradation. If a data source (e.g., Yahoo Finance) fails, the system logs the error and continues without crashing.
-* **Structured Logging:** Replaced standard console output with Python's `logging` module for better observability in containerized environments.
-* **Data Safety:** Uses dynamic history fetching (`iloc[-1]`) to prevent "index out of range" errors during market holidays or partial data returns.
-* **Modular Architecture:** Utility logic is decoupled (`utils.py`) from business logic for better maintainability and testing.
 
 ## 🛠️ Tech Stack
 
 * **Core:** Python 3.10+
 * **Data:** `yfinance` (Yahoo Finance API)
 * **Data Structures:** Pandas (DataFrames)
-* **Quality:** Type Hinting (`typing`), PEP 8 Standards
 
 ## 📦 Installation
 
@@ -27,22 +22,17 @@ cd market-snapshot
 
 ```
 
-
 2. **Set up Virtual Environment**
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: .\venv\Scripts\activate
 
 ```
-
-
 3. **Install Dependencies**
 ```bash
 pip install -r requirements.txt
 
 ```
-
-
 
 ## 🏃 Usage
 
