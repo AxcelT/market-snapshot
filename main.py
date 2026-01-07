@@ -1,7 +1,7 @@
 import logging
 import yfinance as yf
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
 from utils import safe_fmt
 
 # ---------------------------------------------------------
@@ -51,7 +51,7 @@ def determine_volatility_state(vix_value: float) -> str:
     else:
         return "High / Volatile"
     
-def fetch_market_snapshot() -> dict[str, any]:
+def fetch_market_snapshot() -> dict[str, Any]:
     """
     Fetches all market data and returns it as a raw dictionary.
     """
