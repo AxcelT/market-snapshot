@@ -78,36 +78,20 @@ def fetch_market_snapshot() -> dict[str, any]:
 # ---------------------------------------------------------
 
 def main():
-    # Get the current date
-    current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"\n--- MARKET SNAPSHOT: {current_date} ---\n")
-
-    # Fetch Data
-    data_store = {}
+    snapshot = fetch_market_snapshot()
     
-    for tName, tSymbol in TICKERS.items():
-        price = get_latest_price(tSymbol)
-        data_store[tName] = price
+    # Extract the timestamp from the data
+    current_date = snapshot.get("generated_at", "Unknown Date")
 
-    # specific logic for Volatility State
-    vix_val = data_store.get("VIX", 0)
-    # Logic check: if VIX is None, we cannot determine state
-    if vix_val is not None:
-        vol_state = determine_volatility_state(vix_val)
-    else:
-        vol_state = "Unknown (Data Missing)"
-
-    # Display Results
+    print(f"\n--- MARKET SNAPSHOT: {current_date} ---\n")
     print(f"{'Metric':<20} | {'Value':<15}")
     print("-" * 35)
 
-    print(f"{'S&P 500':<20} | {safe_fmt(data_store.get('S&P 500'))}")
-    print(f"{'VIX':<20} | {safe_fmt(data_store.get('VIX'))}")
-    print(f"{'Volatility State':<20} | {vol_state}")
-
-# The code passes the percentage sign as a suffix argument
-    print(f"{'US 10Y Yield':<20} | {safe_fmt(data_store.get('10Y Yield'), suffix='%')}")
-    print(f"{'USD/PHP':<20} | {safe_fmt(data_store.get('USD/PHP'))}")
+    print(f"{'S&P 500':<20} | {safe_fmt(snapshot.get('S&P 500'))}")
+    print(f"{'VIX':<20} | {safe_fmt(snapshot.get('VIX'))}")
+    print(f"{'Volatility State':<20} | {snapshot.get('Volatility State')}")
+    print(f"{'US 10Y Yield':<20} | {safe_fmt(snapshot.get('10Y Yield'), suffix='%')}")
+    print(f"{'USD/PHP':<20} | {safe_fmt(snapshot.get('USD/PHP'))}")
 
 if __name__ == "__main__":
     main()
