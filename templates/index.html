@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Market Pulse</title>
+</head>
+<body>
+    <h1>Market Pulse Dashboard</h1>
+    
+    <button id="fetch-btn">Get Snapshot</button>
+    
+    <pre id="results-area">Click the button to load data...</pre>
+
+    <script>
+        // The script selects the button and result elements from the DOM
+        const btn = document.getElementById('fetch-btn');
+        const display = document.getElementById('results-area');
+
+        btn.addEventListener('click', async () => {
+            // The code updates the display to show a loading state
+            display.innerText = "Loading...";
+
+            try {
+                // The browser sends a GET request to the /snapshot endpoint
+                const response = await fetch('/snapshot');
+                
+                // The response body is parsed as JSON
+                const data = await response.json();
+
+                // The JSON data is converted to a string for display
+                display.innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                // Any errors during the fetch are logged and displayed to the user
+                console.error('Error:', error);
+                display.innerText = "Error fetching data.";
+            }
+        });
+    </script>
+</body>
+</html>
