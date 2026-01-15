@@ -18,3 +18,30 @@ def get_snapshot():
 if __name__ == '__main__':
     # reliable dev server
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+    # --- NEW JOURNAL FEATURE START ---
+
+@app.route('/journal', methods=['GET', 'POST'])
+def journal_page():
+    """
+    Handles displaying the journal form (GET) 
+    and processing the submitted entry (POST).
+    """
+    if request.method == 'POST':
+        # 1. Get data from the form
+        # Hint: title = request.form.get('title')
+        
+        # 2. Get market data
+        # Hint: market_data = fetch_market_snapshot()
+        
+        # 3. Create the data structure
+        
+        # 4. Save to JSON file (Reuse your logic from the practice script!)
+        
+        # 5. Return a success message or render a template with the data
+        return "Journal Saved! (You need to make this prettier)"
+    
+    # If it's a GET request, just show the form
+    return render_template('journal_sample.html') # needs to create/rename this
+
+# --- NEW JOURNAL FEATURE END ---

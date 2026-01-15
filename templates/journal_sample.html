@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Journal Entry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Market Journal</h1>
+        
+        <form action="/journal" method="POST">
+            
+            <label for="title">Entry Title:</label>
+            <input type="text" id="title" name="title" required>
+            
+            <br><br>
+            
+            <label for="content">Journal Entry:</label>
+            <textarea id="content" name="content" rows="5" required></textarea>
+            
+            <br><br>
+            
+            <button type="submit">Snapshot Market & Save</button>
+        </form>
+        
+        <br>
+        <a href="/">Back to Dashboard</a>
+    </div>
+</body>
+</html>
